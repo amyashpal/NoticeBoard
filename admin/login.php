@@ -121,7 +121,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" placeholder="Enter your password" required>
             </div>
+            <a href="../admin/admin_register.php" >Register Admin</a>
             <button type="submit">Login</button>
+     
         </form>
         <?php if (isset($error)): ?>
             <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
