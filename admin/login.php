@@ -1,31 +1,50 @@
 <?php
-session_start();
-include '../includes/db.php';
-include '../includes/header.php';
+session_start();  // Start the session
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = trim($_POST['username']);
+// Include the database connection
+include '../includes/db.php';  // Adjust the path based on your project structure
+include '../includes/header.php';  // Adjust the path based on your project structure
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM admins WHERE Username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Query to find the admin by username
+    $sql = "SELECT * FROM admins WHERE Username = '$username'";
+    $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        // Admin found, now verify the password
         $admin = $result->fetch_assoc();
+
+        // Verify the password (assuming it's hashed in the database)
         if (password_verify($password, $admin['Password'])) {
+            // Login successful, store admin ID in session
             $_SESSION['admin_id'] = $admin['AdminId'];
+
+            // Insert the login event (insert only login_time for now)
+            $admin_id = $_SESSION['admin_id'];
+            $log_login_sql = "INSERT INTO log (admin_id, login_time) VALUES ($admin_id, CURRENT_TIMESTAMP)";
+            if ($conn->query($log_login_sql) === TRUE) {
+                // Store the last inserted log ID in session
+                $_SESSION['log_id'] = $conn->insert_id;  // Store log record ID
+                echo "Login event logged.<br>";
+            } else {
+                echo "Error logging login event: " . $conn->error . "<br>";
+            }
+
+            // Redirect to the admin dashboard or home page
             header('Location: dashboard.php');
-            exit;
+            exit();
         } else {
-            $error = "Invalid username or password.";
+            echo "Invalid password.";
         }
     } else {
-        $error = "Invalid username or password.";
+        echo "Admin not found.";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

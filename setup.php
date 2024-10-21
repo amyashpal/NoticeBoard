@@ -12,12 +12,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Create database
+// Create database if it doesn't exist
 $sql = "CREATE DATABASE IF NOT EXISTS $dbname";
 if ($conn->query($sql) === TRUE) {
     echo "Database created successfully<br>";
 } else {
-    echo "Error creating database: " . $conn->error . "<br>";
+    die("Error creating database: " . $conn->error . "<br>");
 }
 
 // Select the database
@@ -60,6 +60,17 @@ CREATE TABLE IF NOT EXISTS notice_tags (
     FOREIGN KEY (TagId) REFERENCES tags(TagId) ON DELETE CASCADE
 );";
 
+// SQL query to create the `log` table
+$create_log_table_sql = "
+    CREATE TABLE IF NOT EXISTS log (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        admin_id INT NOT NULL,
+        action VARCHAR(10) NOT NULL,  -- 'login' or 'logout'
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (admin_id) REFERENCES admins(AdminId)  -- Correct foreign key reference
+    );
+";
+
 // Execute table creation queries
 if ($conn->query($createAdminsTable) === TRUE) {
     echo "Table 'admins' created successfully<br>";
@@ -85,6 +96,12 @@ if ($conn->query($createNoticeTagsTable) === TRUE) {
     echo "Error creating table 'notice_tags': " . $conn->error . "<br>";
 }
 
+if ($conn->query($create_log_table_sql) === TRUE) {
+    echo "Log table created successfully<br>";
+} else {
+    echo "Error creating log table: " . $conn->error . "<br>";
+}
+
 // Insert initial tags
 $insertTags = "
 INSERT IGNORE INTO tags (Name) VALUES
@@ -97,7 +114,7 @@ INSERT IGNORE INTO tags (Name) VALUES
 ('Semester 7'),
 ('Semester 8'),
 ('Sports'),
-('Extra Curricular');
+('For All');
 ";
 
 if ($conn->query($insertTags) === TRUE) {
