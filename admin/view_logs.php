@@ -2,7 +2,7 @@
 include '../includes/db.php';  // Database connection
 
 // Fetch admin log entries
-$adminSql = "SELECT log.id, admins.username, log.login_time, log.logout_time 
+$adminSql = "SELECT log.logid, admins.username, log.login_time, log.logout_time 
              FROM log 
              JOIN admins ON log.admin_id = admins.adminid 
              ORDER BY log.login_time DESC";
@@ -26,7 +26,7 @@ echo "<table border='1'>
 
 while($row = $adminResult->fetch_assoc()) {
     echo "<tr>
-            <td>" . $row['id'] . "</td>
+            <td>" . $row['logid'] . "</td>
             <td>" . $row['username'] . "</td>
             <td>" . (!empty($row['login_time']) ? $row['login_time'] : 'N/A') . "</td>
             <td>" . (!empty($row['logout_time']) ? $row['logout_time'] : 'N/A') . "</td>
