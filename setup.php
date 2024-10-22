@@ -12,18 +12,20 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Create database
+// Create database if it doesn't exist
 $sql = "CREATE DATABASE IF NOT EXISTS $dbname";
 if ($conn->query($sql) === TRUE) {
     echo "Database created successfully<br>";
 } else {
-    echo "Error creating database: " . $conn->error . "<br>";
+    die("Error creating database: " . $conn->error . "<br>");
 }
 
 // Select the database
 $conn->select_db($dbname);
 
 // SQL to create tables
+
+// Create the `admins` table
 $createAdminsTable = "
 CREATE TABLE IF NOT EXISTS admins (
     AdminId INT PRIMARY KEY AUTO_INCREMENT,
@@ -32,6 +34,16 @@ CREATE TABLE IF NOT EXISTS admins (
     Email VARCHAR(100) NOT NULL UNIQUE
 );";
 
+// Create the `users` table
+$createUsersTable = "
+CREATE TABLE IF NOT EXISTS users (
+    UserId INT PRIMARY KEY AUTO_INCREMENT,
+    Username VARCHAR(100) NOT NULL UNIQUE,
+    Password VARCHAR(255) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE
+);";
+
+// Create the `notices` table
 $createNoticesTable = "
 CREATE TABLE IF NOT EXISTS notices (
     NoticeId INT PRIMARY KEY AUTO_INCREMENT,
@@ -45,12 +57,14 @@ CREATE TABLE IF NOT EXISTS notices (
     FOREIGN KEY (AdminId) REFERENCES admins(AdminId)
 );";
 
+// Create the `tags` table
 $createTagsTable = "
 CREATE TABLE IF NOT EXISTS tags (
     TagId INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(100) NOT NULL UNIQUE
 );";
 
+// Create the `notice_tags` table
 $createNoticeTagsTable = "
 CREATE TABLE IF NOT EXISTS notice_tags (
     NoticeId INT,
@@ -60,29 +74,43 @@ CREATE TABLE IF NOT EXISTS notice_tags (
     FOREIGN KEY (TagId) REFERENCES tags(TagId) ON DELETE CASCADE
 );";
 
+// Create the `log` table with `login_time` and `logout_time` as NULL
+$createLogTable = "
+CREATE TABLE IF NOT EXISTS log (
+    logid INT AUTO_INCREMENT PRIMARY KEY,
+    admin_id INT NOT NULL,
+    login_time TIMESTAMP NULL DEFAULT NULL,
+    logout_time TIMESTAMP NULL DEFAULT NULL,
+    FOREIGN KEY (admin_id) REFERENCES admins(AdminId)
+);";
+
+// Create the `userlog` table with `login_time` and `logout_time` as NULL
+$createUserLogTable = "
+CREATE TABLE IF NOT EXISTS userlog (
+    logid INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    login_time TIMESTAMP NULL DEFAULT NULL,
+    logout_time TIMESTAMP NULL DEFAULT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(UserId)
+);";
+
 // Execute table creation queries
-if ($conn->query($createAdminsTable) === TRUE) {
-    echo "Table 'admins' created successfully<br>";
-} else {
-    echo "Error creating table 'admins': " . $conn->error . "<br>";
-}
+$tables = [
+    'admins' => $createAdminsTable,
+    'users' => $createUsersTable,
+    'notices' => $createNoticesTable,
+    'tags' => $createTagsTable,
+    'notice_tags' => $createNoticeTagsTable,
+    'log' => $createLogTable,
+    'userlog' => $createUserLogTable
+];
 
-if ($conn->query($createNoticesTable) === TRUE) {
-    echo "Table 'notices' created successfully<br>";
-} else {
-    echo "Error creating table 'notices': " . $conn->error . "<br>";
-}
-
-if ($conn->query($createTagsTable) === TRUE) {
-    echo "Table 'tags' created successfully<br>";
-} else {
-    echo "Error creating table 'tags': " . $conn->error . "<br>";
-}
-
-if ($conn->query($createNoticeTagsTable) === TRUE) {
-    echo "Table 'notice_tags' created successfully<br>";
-} else {
-    echo "Error creating table 'notice_tags': " . $conn->error . "<br>";
+foreach ($tables as $tableName => $createQuery) {
+    if ($conn->query($createQuery) === TRUE) {
+        echo "Table '$tableName' created successfully<br>";
+    } else {
+        echo "Error creating table '$tableName': " . $conn->error . "<br>";
+    }
 }
 
 // Insert initial tags
@@ -97,7 +125,7 @@ INSERT IGNORE INTO tags (Name) VALUES
 ('Semester 7'),
 ('Semester 8'),
 ('Sports'),
-('Extra Curricular');
+('For All');
 ";
 
 if ($conn->query($insertTags) === TRUE) {

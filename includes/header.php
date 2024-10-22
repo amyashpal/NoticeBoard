@@ -21,7 +21,11 @@ if (session_status() === PHP_SESSION_NONE) {
             <?php if (isset($_SESSION['admin_id'])): ?>
                 <a href="../admin/dashboard.php" class="nav-button">Dashboard</a>
                 <a href="../admin/logout.php" class="nav-button">Logout</a>
+            <?php elseif (isset($_SESSION['user_id'])): ?>
+                <a href="../user/user_dashboard.php" class="nav-button">User Dashboard</a>
+                <a href="../user/user_logout.php" class="nav-button">Logout</a>
             <?php else: ?>
+                <a href="../user/user_login.php" class="nav-button">User Login</a>
                 <a href="../admin/login.php" class="nav-button">Admin Login</a>
             <?php endif; ?>
         </nav>
