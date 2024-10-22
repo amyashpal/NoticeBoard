@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS notice_tags (
 // Create the `log` table with `login_time` and `logout_time` as NULL
 $createLogTable = "
 CREATE TABLE IF NOT EXISTS log (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    logid INT AUTO_INCREMENT PRIMARY KEY,
     admin_id INT NOT NULL,
     login_time TIMESTAMP NULL DEFAULT NULL,
     logout_time TIMESTAMP NULL DEFAULT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS log (
 // Create the `userlog` table with `login_time` and `logout_time` as NULL
 $createUserLogTable = "
 CREATE TABLE IF NOT EXISTS userlog (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    logid INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     login_time TIMESTAMP NULL DEFAULT NULL,
     logout_time TIMESTAMP NULL DEFAULT NULL,
