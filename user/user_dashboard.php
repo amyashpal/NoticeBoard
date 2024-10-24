@@ -1,51 +1,12 @@
-<style>
-
-    .container {
-        display: flex;
-        justify-content: center; 
-        margin-top: 50px;
-    }
-
-    .c2 {
-        background-color: white;
-        border: 1px solid white;
-        padding: 20px;
-        width: 60%; 
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-        margin-bottom: 20px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th, td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: center;
-    }
-
-    th {
-        background-color: #f4f4f4;
-    }
-
-    .table-container {
-        overflow-x: auto;
-    }
-
-
-    
-</style>
-
 <?php
 include '../includes/header.php'; 
 include '../includes/db.php'; 
+
+if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin_id'])) {
+ 
+    header('Location: user_login.php');
+    exit;
+}
 
 $user_id = $_SESSION['user_id'];
 
@@ -59,13 +20,14 @@ $studentResult = $conn->query($studentSql);
 echo "<div class='container'>"; 
 echo "<div class='c2'>";
 echo "<h2>Student Login/Logout Logs</h2>";
-echo "<div class='table-container'><table>
+echo "<div class='table-container'><table border=1>
         <tr>
             <th>ID</th>
             <th>Student Username</th>
             <th>Login Time</th>
             <th>Logout Time</th>
         </tr>";
+
 
 while($row = $studentResult->fetch_assoc()) {
     echo "<tr>

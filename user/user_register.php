@@ -3,16 +3,19 @@ session_start();
 include '../includes/header.php';  
 include '../includes/db.php';  
 
+
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
+  
     if ($password !== $confirm_password) {
         $error = "Passwords do not match.";
     } else {
-    
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         $checkUserSql = "SELECT * FROM users WHERE Username = ? OR Email = ?";
@@ -22,14 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            $error = "Username or email already exists.";
+            echo '<script>alert("An admin with this username or email already exists!")</script>';
         } else {
             $insertUserSql = "INSERT INTO users (Username, Password, Email) VALUES (?, ?, ?)";
             $stmt = $conn->prepare($insertUserSql);
             $stmt->bind_param("sss", $username, $hashed_password, $email);
 
             if ($stmt->execute()) {
-             
                 header('Location: user_login.php');
                 exit();
             } else {
@@ -70,10 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <button type="submit">Register</button>
         </form>
-        
-        <?php if (isset($error)): ?>
-            <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
     </div>
 
     <?php include '../includes/footer.php'; ?>  

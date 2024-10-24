@@ -1,52 +1,14 @@
-<style>
-
-    .container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 50px;
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .c2, .c3 {
-        background-color: white;
-        border: 1px solid white;
-        padding: 20px;
-        width: 48%; 
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-        margin-bottom: 20px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th, td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: center;
-    }
-
-    th {
-        background-color: #f4f4f4;
-    }
-
-    .table-container {
-        overflow-x: auto;
-    }
-
-</style>
-
 <?php
 include '../includes/db.php'; 
 include '../includes/header.php'; 
+
+
+if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin_id'])) {
+
+    header('Location: login.php');
+    exit;
+}
+
 
 $adminSql = "SELECT log.logid, admins.username, log.login_time, log.logout_time 
              FROM log 
@@ -62,9 +24,10 @@ $studentResult = $conn->query($studentSql);
 
 echo "<div class='container'>";
 
+
 echo "<div class='c2'>";
 echo "<h2>Admin Login/Logout Logs</h2>";
-echo "<div class='table-container'><table>
+echo "<div class='table-container'><table border=1>
         <tr>
             <th>ID</th>
             <th>Admin Username</th>
@@ -81,11 +44,12 @@ while($row = $adminResult->fetch_assoc()) {
           </tr>";
 }
 echo "</table></div>";
-echo "</div>"; // Close c2
+echo "</div>"; 
+
 
 echo "<div class='c3'>";
 echo "<h2>Student Login/Logout Logs</h2>";
-echo "<div class='table-container'><table>
+echo "<div class='table-container'><table border=1>
         <tr>
             <th>ID</th>
             <th>Student Username</th>
@@ -102,9 +66,9 @@ while($row = $studentResult->fetch_assoc()) {
           </tr>";
 }
 echo "</table></div>";
-echo "</div>"; // Close c3
+echo "</div>";
 
-echo "</div>"; // Close container
+echo "</div>"; 
 
 $conn->close();  
 include '../includes/footer.php'; 
