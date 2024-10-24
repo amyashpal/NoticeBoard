@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         {
             echo '<script>alert("Wrong Username or Password")</script>';
         }
+        
     }
 }
 ?>
