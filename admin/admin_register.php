@@ -2,6 +2,7 @@
 session_start(); 
 include '../includes/header.php'; 
 
+
 if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin_id'])) {
     header('Location: login.php');
     exit;
@@ -15,25 +16,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
+
     if ($password !== $confirm_password) {
         echo '<script>alert("Passwords do not match!")</script>';
     } else {
-        $checkSql = "SELECT * FROM admins WHERE Username = ? OR Email = ?";
-        $stmt = $conn->prepare($checkSql);
-        $stmt->bind_param("ss", $username, $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        
+        $checkSql = "SELECT * FROM admins WHERE Username = '$username' OR Email = '$email'";
+        $result = mysqli_query($conn, $checkSql);
 
-        if ($result->num_rows > 0) {
+        if (mysqli_num_rows($result) > 0) {
             echo '<script>alert("An admin with this username or email already exists!")</script>';
         } else {
+            
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $sql = "INSERT INTO admins (Username, Password, Email) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sss", $username, $hashed_password, $email);
-
-            if ($stmt->execute()) {
+            $insertSql = "INSERT INTO admins (Username, Password, Email) VALUES ('$username', '$hashed_password', '$email')";
+            if (mysqli_query($conn, $insertSql)) {
                 header('Location: login.php');
                 exit();
             } else {
@@ -43,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

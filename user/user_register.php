@@ -3,44 +3,39 @@ session_start();
 include '../includes/header.php';  
 include '../includes/db.php';  
 
-
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-  
     if ($password !== $confirm_password) {
-        $error = "Passwords do not match.";
+        echo '<script>alert("Passwords do not match.")</script>';
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $checkUserSql = "SELECT * FROM users WHERE Username = ? OR Email = ?";
-        $stmt = $conn->prepare($checkUserSql);
-        $stmt->bind_param("ss", $username, $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $checkUserSql = "SELECT * FROM users WHERE Username = '$username' OR Email = '$email'";
+        $result = mysqli_query($conn, $checkUserSql);
 
-        if ($result->num_rows > 0) {
-            echo '<script>alert("An admin with this username or email already exists!")</script>';
+        if (mysqli_num_rows($result) > 0) {
+            echo '<script>alert("A user with this username or email already exists.")</script>';
         } else {
-            $insertUserSql = "INSERT INTO users (Username, Password, Email) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($insertUserSql);
-            $stmt->bind_param("sss", $username, $hashed_password, $email);
-
-            if ($stmt->execute()) {
+            
+            $insertUserSql = "INSERT INTO users (Username, Password, Email) VALUES ('$username', '$hashed_password', '$email')";
+            if (mysqli_query($conn, $insertUserSql)) {
                 header('Location: user_login.php');
                 exit();
             } else {
-                $error = "Error: " . $stmt->error;
+                echo '<script>alert("Error: Something went wrong.")</script>';
             }
         }
     }
 }
+
+
+mysqli_close($conn);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
