@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['LogId'])) {
 
 session_destroy();
 
-header('Location:../public/index.php');
+header('Location:user_login.php');
 
 exit();
 ?>

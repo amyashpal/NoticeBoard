@@ -53,12 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" placeholder="Enter your password" required>
             </div>
-            
             <a href="../user/user_register.php">Register User</a>
             <button type="submit">Login</button>
         </form>
     </div>
-
     <?php include '../includes/footer.php'; ?>
 </body>
 </html>
+

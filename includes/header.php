@@ -21,6 +21,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <a href="../public/index.php" class="nav-button">Home</a>
             <?php if (isset($_SESSION['admin_id'])): ?>
                 <a href="../admin/dashboard.php" class="nav-button">Dashboard</a>
+                <a href="../admin/create_notice.php" class="nav-button">Create Notice</a>
                 <a href="../admin/admin_register.php" class="nav-button">Add Admin</a>
                 <a href="../admin/logout.php" class="nav-button">Logout</a>
             <?php elseif (isset($_SESSION['user_id'])): ?>

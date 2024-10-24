@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_query($conn, $log_login_sql);
         
             $_SESSION['log_id'] = mysqli_insert_id($conn);
-            header('Location: index.php');
+            header('Location:../public/index.php');
             exit();
         } 
     }
@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
     <div class="container">
@@ -50,12 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" placeholder="Enter your password" required>
             </div>
-
             <button type="submit">Login</button>
-     
         </form>
     </div>
-
     <?php include '../includes/footer.php'; ?>
 </body>
 </html>

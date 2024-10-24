@@ -39,8 +39,10 @@
         overflow-x: auto;
     }
 
+
+    
 </style>
-<body>
+
 <?php
 include '../includes/header.php'; 
 include '../includes/db.php'; 
@@ -80,4 +82,3 @@ echo "</div>";
 $conn->close();  
 include '../includes/footer.php'; 
 ?>
-<body>
