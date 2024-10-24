@@ -25,8 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header('Location:../public/index.php');
             exit();
         } 
+        else
+        {
+            echo '<script>alert("Wrong Username or Password")</script>';
+        }
     }
 }
+
+
 ?>
 
 

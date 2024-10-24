@@ -13,7 +13,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['log_id'])) {
     if ($conn->query($log_logout_sql) === TRUE) {
         echo "Logout event logged.<br>";
     } else {
-        echo "Error logging logout event: " . $conn->error . "<br>";
+        echo "Error logging logout event:<br>";
     }
 }
 

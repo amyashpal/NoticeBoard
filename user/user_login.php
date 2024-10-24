@@ -17,17 +17,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $user['UserId'];
             $user_id = $_SESSION['user_id'];
 
-            $log_login_sql = "INSERT INTO userlog (user_id, login_time) VALUES ($user_id, CURRENT_TIMESTAMP)";
+            $log_login_sql = "INSERT INTO userlog VALUES ('',$user_id, CURRENT_TIMESTAMP,'')";
             mysqli_query($conn, $log_login_sql);
                 $_SESSION['LogId'] = mysqli_insert_id($conn);
              
             header('Location: ../public/index.php');
             exit();
-        } else {
-            $error = "Invalid password.";
+        } else
+        {
+            echo '<script>alert("Wrong Username or Password")</script>';
         }
-    } else {
-        $error = "User not found.";
     }
 }
 ?>

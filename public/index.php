@@ -16,7 +16,7 @@
 
 .cc {
     width: 100%;
-    width: auto;
+    width: 150vh;
     margin: 0 auto;
     margin-top:100px;
     padding: 20px;
@@ -88,8 +88,8 @@ a{
             while ($row = $noticeResult->fetch_assoc()) {
                 echo "<li>";
                 echo "<div class='notice-details'>";
-                echo "<h3>{$row['Title']}</h3>";
-                echo "<p>{$row['Description']}</p>";
+                echo "<h2>Title:{$row['Title']}</h2>";
+                echo "<h3>{$row['Description']}</h3>";
                 echo "<p>Category: {$row['Category']}</p>";
                 echo "<p>Tags: {$row['Tags']}</p>";
                 echo "<p>Created At: {$row['CreatedAt']}</p>";

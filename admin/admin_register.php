@@ -12,7 +12,7 @@
 
     
         if ($password !== $confirm_password) {
-            $error = "Passwords do not match.";
+                echo '<script>alert("Wrong Username or Password")</script>';
         } else {
          
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -27,7 +27,7 @@
                 header('Location: login.php');
                 exit();
             } else {
-                $error = "Error: " . $stmt->error;
+                echo '<script>alert("Something went Wrong")</script>';
             }
         }
     }
