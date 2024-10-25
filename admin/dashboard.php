@@ -1,13 +1,14 @@
+
+<head>
+<link rel="stylesheet" href="../styles/tableadmin.css">
+</head>
 <?php
 include '../includes/db.php'; 
 include '../includes/header.php'; 
+include '../includes/auth.php'; 
 
 
-if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin_id'])) {
 
-    header('Location: login.php');
-    exit;
-}
 
 
 $adminSql = "SELECT log.logid, admins.username, log.login_time, log.logout_time 
@@ -27,7 +28,7 @@ echo "<div class='container'>";
 
 echo "<div class='c2'>";
 echo "<h2>Admin Login/Logout Logs</h2>";
-echo "<div class='table-container'><table >
+echo "<div class='table-container'><table border=1 >
         <tr>
             <th>ID</th>
             <th>Admin Username</th>

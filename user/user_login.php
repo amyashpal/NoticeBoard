@@ -27,6 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '<script>alert("Wrong Username or Password")</script>';
         }
         
+    }else
+    {
+        echo '<script>alert("Wrong Username or Password")</script>';
     }
 }
 ?>
@@ -38,23 +41,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Login</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles/studentform.css">
 </head>
 <body>
     <div class="container">
-        <h2>User Login</h2>
-        <form method="POST" action="">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" placeholder="Enter your username" required>
+        <div class="row">
+            <div class="col-md-4">
+                <h2>User Login</h2>
+                <form method="POST" action="">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                    <a href="../user/user_register.php">Register User</a>
+                    <button type="submit">Login</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="Enter your password" required>
-            </div>
-            <a href="../user/user_register.php">Register User</a>
-            <button type="submit">Login</button>
-        </form>
+        </div>
     </div>
     <?php include '../includes/footer.php'; ?>
 </body>

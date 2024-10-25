@@ -1,12 +1,10 @@
+<head>
+<link rel="stylesheet" href="../styles/table.css">
+</head>
 <?php
 include '../includes/header.php'; 
 include '../includes/db.php'; 
-
-if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin_id'])) {
- 
-    header('Location: user_login.php');
-    exit;
-}
+include '../includes/auth.php'; 
 
 $user_id = $_SESSION['user_id'];
 

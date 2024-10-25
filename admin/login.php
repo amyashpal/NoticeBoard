@@ -44,23 +44,90 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link rel="stylesheet" href="../styles.css">
+    <style>
+        
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+    
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        
+     
+        .col-md-4 {
+            width: 100%;
+            max-width: 400px;
+        }
+
+       
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+       
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: black;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        
+        
+    </style>
 </head>
 <body>
     <div class="container">
-        <h2>Admin Login</h2>
-        <form method="POST" action="">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" placeholder="Enter your username" required>
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Admin Login</h2>
+                <form method="POST" action="">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="Enter your password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
+        </div>
     </div>
     <?php include '../includes/footer.php'; ?>
 </body>
 </html>
+

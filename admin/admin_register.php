@@ -3,12 +3,9 @@ session_start();
 include '../includes/header.php'; 
 
 
-if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin_id'])) {
-    header('Location: login.php');
-    exit;
-}
 
 include '../includes/db.php';
+include '../includes/auth.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -42,14 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Registration</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles/adminform.css">
+
 </head>
 <body>
     <div class="container">
@@ -73,9 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <button type="submit">Register</button>
         </form>
-        <?php if (isset($error)): ?>
-            <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
+    
     </div>
     <?php include '../includes/footer.php'; ?>
 </body>

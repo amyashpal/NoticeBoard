@@ -1,12 +1,8 @@
 <?php
 include '../includes/db.php';
 include '../includes/header.php'; 
+include '../includes/auth.php'; 
 
-if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin_id'])) {
-  
-    header('Location: login.php');
-    exit;
-}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $description = $_POST['description'];
@@ -44,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Notice</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
     <div class="container">
