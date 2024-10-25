@@ -27,7 +27,7 @@ echo "<div class='container'>";
 
 echo "<div class='c2'>";
 echo "<h2>Admin Login/Logout Logs</h2>";
-echo "<div class='table-container'><table border=1>
+echo "<div class='table-container'><table >
         <tr>
             <th>ID</th>
             <th>Admin Username</th>
