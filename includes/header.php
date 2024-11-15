@@ -10,7 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <link rel="stylesheet" href="../styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles/styles.css">
     <title>Notice Board</title>
 </head>
 <body>

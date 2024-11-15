@@ -1,6 +1,7 @@
 <head>
 <link rel="stylesheet" href="../styles/table.css">
 </head>
+
 <?php
 include '../includes/header.php'; 
 include '../includes/db.php'; 
