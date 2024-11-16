@@ -1,52 +1,23 @@
-<?php include '../includes/header.php'; ?>
+<?php include '../includes/header.php';  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notice List</title>
-    
-    <link rel="stylesheet" href="../styles/notice.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(function(){
-            // Fetch user name
-            $('#fetchName').click(function(){
-                $.get('fetch_user.php', function(response){
-                    $('#userInfo').html('User Name: ' + response);
-                });
-            });
 
-            // Fetch user role
-            $('#fetchMail').click(function(){
-                $.get('fetch_mail.php', function(response){
-                    $('#userInfo').html('User Mail: ' + response);
-                });
-            });
-        });
-    </script>
+    <link rel="stylesheet" href="../styles/notice.css">
 </head>
 <body>
-<?php if (isset($_SESSION['user_id'])): ?>
-    <div class="nclass" >
-   
-                 <!-- Buttons for fetching user name and role -->
-        <button id="fetchName" class="nb">Fetch User Name</button>
-        <button id="fetchMail" class="nb">Fetch User Mail</button>
-        
-           
-            <!-- Div to display fetched user information -->
-        <div id="userInfo"></div>
-    </div>
-    <?php endif; ?>
     <div class="cc">
-        
         <h2>Notices</h2>
         <ul class="notice-list">
             <?php
             include '../includes/db.php'; 
+
             $noticeSql = "SELECT * FROM notices ORDER BY CreatedAt DESC";
             $noticeResult = $conn->query($noticeSql);
+
             while ($row = $noticeResult->fetch_assoc()) {
                 echo "<li>";
                 echo "<div class='notice-details'>";
@@ -61,14 +32,14 @@
                 echo "</div>";
                 echo "</li>";
             }
+
             $conn->close();
             ?>
         </ul>
         
-       
-        
     </div>
 
     <?php include '../includes/footer.php'; ?>
+   
 </body>
 </html>
