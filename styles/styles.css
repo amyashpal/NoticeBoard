@@ -5,14 +5,13 @@
     padding: 0;
 }
 
-/* Body Styling */
+/* General Body Styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
     color: #333;
-    padding-top: 60px;
-    padding-bottom: 60px;
     margin: 0;
+    padding: 60px 0;
 }
 
 /* Header Styles */
@@ -32,11 +31,6 @@ header {
 header h1 {
     flex-grow: 1;
     font-size: 24px;
-    margin: 0;
-}
-
-header nav {
-    margin-left: auto;
 }
 
 header nav a {
@@ -65,7 +59,7 @@ footer {
     padding: 10px 0;
 }
 
-/* Container for page content */
+/* Main Content Container */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -74,7 +68,7 @@ footer {
 }
 
 /* Button Styles */
-.admin-button, .home {
+button, .admin-button, .home {
     background-color: #333;
     color: white;
     border: none;
@@ -85,7 +79,7 @@ footer {
     transition: background-color 0.3s;
 }
 
-.admin-button:hover, .home:hover {
+button:hover, .admin-button:hover, .home:hover {
     background-color: #555;
 }
 
@@ -168,4 +162,3 @@ form button {
 form button:hover {
     background-color: #555;
 }
-

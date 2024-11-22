@@ -41,7 +41,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Login</title>
-    <link rel="stylesheet" href="../styles/studentform.css">
+    <style>
+        
+        .container {
+            max-width: 500px;
+            height:350px;
+    margin: 50px auto 0; /* Adds 50px margin from the top */
+    padding: 15px;
+}
+
+        
+    
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+     
+        .col-md-4 {
+            width: 100%;
+            max-width: 400px;
+        }
+
+       
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+       
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: black;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        
+        
+    </style>
 </head>
 <body>
     <div class="container">

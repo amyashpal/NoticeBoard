@@ -45,12 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <style>
-        
         .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 15px;
-        }
+            max-width: 500px;
+            height:350px;
+    margin: 50px auto 0; /* Adds 50px margin from the top */
+    padding: 15px;
+}
+
         
     
         .row {

@@ -1,76 +1,123 @@
-
-<head>
-<link rel="stylesheet" href="../styles/tableadmin.css">
-</head>
 <?php
-include '../includes/db.php'; 
-include '../includes/header.php'; 
-include '../includes/auth.php'; 
+session_start();
+include '../includes/db.php';
+include '../includes/header.php';
 
 
 
-
-
-$adminSql = "SELECT log.logid, admins.username, log.login_time, log.logout_time 
-             FROM log 
-             JOIN admins ON log.admin_id = admins.adminid 
-             ORDER BY log.login_time DESC";
-$adminResult = $conn->query($adminSql);
-
-$studentSql = "SELECT userlog.logid, users.username, userlog.login_time, userlog.logout_time 
-               FROM userlog 
-               JOIN users ON userlog.user_id = users.userid 
-               ORDER BY userlog.login_time DESC";
-$studentResult = $conn->query($studentSql);
-
-echo "<div class='container'>";
-
-
-echo "<div class='c2'>";
-echo "<h2>Admin Login/Logout Logs</h2>";
-echo "<div class='table-container'><table border=1 >
-        <tr>
-            <th>ID</th>
-            <th>Admin Username</th>
-            <th>Login Time</th>
-            <th>Logout Time</th>
-        </tr>";
-
-while($row = $adminResult->fetch_assoc()) {
-    echo "<tr>
-            <td>" . $row['logid'] . "</td>
-            <td>" . $row['username'] . "</td>
-            <td>" . (!empty($row['login_time']) ? $row['login_time'] : 'N/A') . "</td>
-            <td>" . (!empty($row['logout_time']) ? $row['logout_time'] : 'N/A') . "</td>
-          </tr>";
-}
-echo "</table></div>";
-echo "</div>"; 
-
-
-echo "<div class='c3'>";
-echo "<h2>Student Login/Logout Logs</h2>";
-echo "<div class='table-container'><table border=1>
-        <tr>
-            <th>ID</th>
-            <th>Student Username</th>
-            <th>Login Time</th>
-            <th>Logout Time</th>
-        </tr>";
-
-while($row = $studentResult->fetch_assoc()) {
-    echo "<tr>
-            <td>" . $row['logid'] . "</td>
-            <td>" . $row['username'] . "</td>
-            <td>" . (!empty($row['login_time']) ? $row['login_time'] : 'N/A') . "</td>
-            <td>" . (!empty($row['logout_time']) ? $row['logout_time'] : 'N/A') . "</td>
-          </tr>";
-}
-echo "</table></div>";
-echo "</div>";
-
-echo "</div>"; 
-
-$conn->close();  
-include '../includes/footer.php'; 
+// Fetch all notices
+$sql = "SELECT * FROM notices ORDER BY CreatedAt DESC";
+$result = $conn->query($sql);
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        .notice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .notice-table th, .notice-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            white-space: nowrap; /* Prevents text from wrapping */
+            overflow: hidden; /* Ensures content does not overflow out of the cell */
+            text-overflow: ellipsis; /* Adds ellipsis when the content overflows */
+        }
+
+        .notice-table th {
+            background-color: #333;
+            color: white;
+        }
+
+        .notice-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .notice-table tr:hover {
+            background-color: #ddd;
+        }
+
+        .edit-btn, .delete-btn {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .edit-btn {
+            background-color: black;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        /* Success message styling */
+        .success-tooltip {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: none;
+            animation: fadeIn 3s forwards;
+        }
+
+        .tooltip-container {
+            position: relative;
+        }
+
+        /* Animation for fade-in effect */
+     
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Dashboard</h2>
+        <table class="notice-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><?php echo $row['Title']; ?></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <?php echo substr($row['Description'], 0, 50) . '...'; ?>
+                    </td>
+                    <td><?php echo $row['Category']; ?></td>
+                    <td>
+                        <a href="edit_notice.php?id=<?php echo $row['NoticeId']; ?>" class="edit-btn">Edit</a>
+                        <a href="delete_notice.php?id=<?php echo $row['NoticeId']; ?>" class="delete-btn" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php include '../includes/footer.php'; ?>
+
+ 
+</body>
+</html>
